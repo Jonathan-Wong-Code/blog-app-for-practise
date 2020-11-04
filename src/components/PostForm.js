@@ -23,7 +23,7 @@ const PostForm = ({ onSubmit, isError, error, originalPost }) => {
 
   return (
     <section>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="post-form">
         <div>
           <label htmlFor="title" className="label">
             Enter title:

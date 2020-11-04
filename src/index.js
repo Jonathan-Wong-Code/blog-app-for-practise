@@ -3,15 +3,29 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { ReactQueryCacheProvider } from "react-query";
 
 if (process.env.NODE_ENV === "development") {
   const { worker } = require("./tests/server");
   worker.start();
 }
 
+const config = {
+  queries: {
+    retry(failureCount, error) {
+      if (error.status === 404) return false;
+      else if (failureCount < 2) return false;
+      else return false;
+    },
+    refetchOnWindowFocus: false,
+  },
+};
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ReactQueryCacheProvider config={config}>
+      <App />
+    </ReactQueryCacheProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

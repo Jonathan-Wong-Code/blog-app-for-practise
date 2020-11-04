@@ -6,7 +6,6 @@
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.0",
     "msw": "^0.21.3",
     "react": "^17.0.1",
@@ -40,5 +39,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^7.26.5",
+    "@testing-library/user-event": "^12.2.0"
   }
 }
