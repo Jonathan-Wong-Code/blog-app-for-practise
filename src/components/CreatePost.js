@@ -19,12 +19,7 @@ const CreatePost = () => {
       {isLoading ? (
         <div>Creating new post...</div>
       ) : (
-        <PostForm
-          type="create-post"
-          onSubmit={create}
-          isError={isError}
-          error={error}
-        />
+        <PostForm onSubmit={create} isError={isError} error={error} />
       )}
     </section>
   );

@@ -19,7 +19,7 @@ const EditPost = () => {
     }
   }, [isSuccess, history]);
 
-  if (isLoading) return <div>UPDATING POST</div>;
+  if (isLoading) return <div>Updating post...</div>;
 
   return (
     <div>

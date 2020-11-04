@@ -1,6 +1,6 @@
 import { rest } from "msw";
 
-const delay = process.env.NODE_ENV === "test" ? 0 : 1500;
+const delay = process.env.NODE_ENV === "test" ? 0 : 1000;
 const endpoint = process.env.REACT_APP_API_URL;
 
 let posts = [
