@@ -1,5 +1,5 @@
 import "./App.css";
-
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import CreatePost from "./components/CreatePost";
 import Dashboard from "./components/Dashboard";
@@ -9,6 +9,10 @@ import Header from "./components/Header";
 import Post from "./components/Post";
 
 function App() {
+  React.useEffect(() => {
+    document.body.dataset.theme = "light";
+  }, []);
+
   return (
     <div className="app">
       <Router>

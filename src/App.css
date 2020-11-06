@@ -1,3 +1,13 @@
+:root {
+  --colors-yellow: yellow;
+  --colors-blue: blue;
+}
+
+body[data-theme="light"] {
+  --colors-primary: var(--colors-blue);
+  --colors-background: var(--colors-yellow);
+}
+
 .app {
   width: 100%;
   max-width: 1100px;

@@ -3,7 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ReactQueryCacheProvider } from "react-query";
+import {
+  ReactQueryCacheProvider,
+  queryCache,
+  ReactQueryConfigProvider,
+} from "react-query";
+import { ReactQueryDevtools } from "react-query-devtools";
 
 if (process.env.NODE_ENV === "development") {
   const { worker } = require("./tests/server");
@@ -23,8 +28,11 @@ const config = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReactQueryCacheProvider config={config}>
-      <App />
+    <ReactQueryCacheProvider queryCache={queryCache}>
+      <ReactQueryConfigProvider config={config}>
+        <ReactQueryDevtools intitialIsOpen={true} />
+        <App />
+      </ReactQueryConfigProvider>
     </ReactQueryCacheProvider>
   </React.StrictMode>,
   document.getElementById("root")

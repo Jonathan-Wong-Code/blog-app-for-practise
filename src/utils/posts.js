@@ -8,7 +8,7 @@ const postsQueryConfig = {
   config: {
     onSuccess: (posts) => {
       posts.forEach((post) => {
-        queryCache.setQueryData(["post", { postId: post.id }], post);
+        updateQueryForPost(post);
       });
     },
   },
