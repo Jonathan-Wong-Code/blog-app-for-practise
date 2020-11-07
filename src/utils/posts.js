@@ -29,6 +29,14 @@ export const usePost = (id) => {
       axios
         .get(`${process.env.REACT_APP_API_URL}/${id}`)
         .then((res) => res.data.post),
+
+    config: {
+      onSuccess: () => {
+        if (!queryCache.getQueryData("posts")) {
+          queryCache.prefetchQuery(postsQueryConfig);
+        }
+      },
+    },
   });
 };
 
