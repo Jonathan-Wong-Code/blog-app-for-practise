@@ -28,12 +28,10 @@ const config = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReactQueryCacheProvider queryCache={queryCache}>
-      <ReactQueryConfigProvider config={config}>
-        <ReactQueryDevtools intitialIsOpen={true} />
-        <App />
-      </ReactQueryConfigProvider>
-    </ReactQueryCacheProvider>
+    <ReactQueryConfigProvider config={config}>
+      <ReactQueryDevtools intitialIsOpen={true} />
+      <App />
+    </ReactQueryConfigProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

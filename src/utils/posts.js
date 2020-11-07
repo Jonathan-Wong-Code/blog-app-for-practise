@@ -41,9 +41,13 @@ export const useCreatePost = () => {
 
     {
       onSuccess: (newItem) => {
-        queryCache.setQueryData("posts", (old) => {
-          return [...old, newItem];
-        });
+        if (queryCache.getQueryData("posts")) {
+          queryCache.setQueryData("posts", (old) => {
+            return [...old, newItem];
+          });
+        }
+
+        queryCache.invalidateQueries("posts");
       },
     }
   );
@@ -58,12 +62,17 @@ export const useUpdatePost = (id, post) => {
     {
       //on Success update query cache
       onSuccess: (updatedPost) => {
-        queryCache.setQueryData("posts", (oldPosts) => {
-          const newPosts = oldPosts.map((post) =>
-            post.id === updatedPost.id ? updatedPost : post
-          );
-          return newPosts;
-        });
+        if (queryCache.getQueryData("posts")) {
+          queryCache.setQueryData("posts", (oldPosts) => {
+            const newPosts = oldPosts.map((post) =>
+              post.id === updatedPost.id ? updatedPost : post
+            );
+            return newPosts;
+          });
+        } else {
+          queryCache.setQueryData("posts", [updatedPost]);
+          queryCache.invalidateQueries("posts");
+        }
 
         updateQueryForPost(updatedPost);
       },
@@ -75,22 +84,32 @@ export const useRemovePost = (post) => {
   return useMutation(
     (postId) => axios.delete(`${process.env.REACT_APP_API_URL}/${postId}`),
     {
-      onMutate: () => {
-        const previousItems = queryCache.getQueryData("posts");
+      // onMutate: () => {
+      //   const previousItems = queryCache.getQueryData("posts");
+      //   queryCache.setQueryData("posts", (oldPosts) => {
+      //     return oldPosts.filter((oldPost) => oldPost.id !== post.id);
+      //   });
 
-        queryCache.setQueryData("posts", (oldPosts) => {
-          return oldPosts.filter((oldPost) => oldPost.id !== post.id);
-        });
+      //   return () => queryCache.setQueryData("posts", previousItems);
+      // },
+      // onError: (err, vars, recover) => {
+      //   console.log(err);
+      //   recover();
+      // },
 
-        return () => queryCache.setQueryData("posts", previousItems);
+      onSuccess: () => {
+        if (queryCache.getQueryData("posts")) {
+          queryCache.setQueryData("posts", (oldPosts) => {
+            const newPosts = oldPosts.filter(
+              (oldPost) => oldPost.id !== post.id
+            );
+            return newPosts;
+          });
+        } else {
+          queryCache.setQueryData("posts", []);
+          queryCache.invalidateQueries("posts");
+        }
       },
-
-      onError: (err, vars, recover) => {
-        console.log(err);
-        recover();
-      },
-
-      onSuccess: () => queryCache.invalidateQueries("posts"),
     }
   );
 };
